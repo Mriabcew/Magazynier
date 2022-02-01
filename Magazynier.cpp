@@ -12,7 +12,11 @@ int main(int argc, char* argv[])
         if (dev == 1)
             developer = true;
         else
+        {
             developer = false;
+            cout << "Podano niewlasciwy argument aby dowiedziec sie wiecej skontaktuj sie z autorem" << endl;
+            return -1;
+        }
     }
     else if (argc == 1)
         developer = false;
