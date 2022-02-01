@@ -12,9 +12,26 @@ private:
 	};
 	int opt;
 public:
+	/**
+	* Menu
+	* Menu basic constructor
+	*/
 	Menu();
+	/**
+	* Menu
+	* @param Display* - this display
+	* Menu constructor 
+	*/
 	Menu(Display*);
-	~Menu();
+	/**
+	* get_opt
+	* getter for opt
+	*/
 	int get_opt();
+	/**
+	* print
+	* @param enum Meni
+	* Showing menu 
+	*/
 	void print(Meni);
 };
