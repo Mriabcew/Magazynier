@@ -15,13 +15,12 @@ private:
 	vector <Field*> map;
 	int height;
 	int widht;
-	Player* player;
 	int field_size;
+	Player* player;
 	int style;
+	bool dev;
 public:
-	Map();
-	Map(Display*,int);
-	~Map();
+	Map(Display*,int,bool);
 
 	enum DIRECTION
 	{

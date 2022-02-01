@@ -2,60 +2,38 @@
 
 void PrimitiveRenderer::draw_rectangle(int x, int y, int size, Color color)
 {
-    /**
-        rysuje wypelniony kwadrat
-    */
     al_draw_filled_rectangle(x, y, x + size, y + size, get_color(color));
 }
 void PrimitiveRenderer::draw_rectangle(int x, int y, int size, Color color, int frame_size)
 {
-    /**
-        rysuje niewypelniony kwadrat
-    */
     al_draw_rectangle(x + frame_size / 2, y + frame_size / 2, x + size - frame_size / 2, y + size - frame_size / 2, get_color(color), frame_size);
 }
 
 void PrimitiveRenderer::draw_rectangle(int x, int y, int size, Color color, int frame_size, Color frame_color)
 {
-    /**
-        rysuje wypelniony kwadrat z ramka
-    */
     draw_rectangle(x, y, size, color);
     draw_rectangle(x, y, size, frame_color, frame_size);
 }
 
-void PrimitiveRenderer::narysuj_kolo(int x, int y, int promien, Color kolor)
+void PrimitiveRenderer::draw_cirlce(int x, int y, int promien, Color kolor)
 {
-    /**
-        rysuje wypelnione kolo
-    */
     al_draw_filled_circle(x, y, promien, get_color(kolor));
 }
 
-void PrimitiveRenderer::narysuj_kolo(int x, int y, int promien, Color kolor, int frame_size)
+void PrimitiveRenderer::draw_cirlce(int x, int y, int promien, Color kolor, int frame_size)
 {
-    /**
-        rysuje niewypelnione kolo
-    */
+   
     al_draw_circle(x, y, promien, get_color(kolor), frame_size);
 }
 
-void PrimitiveRenderer::narysuj_kolo(int x, int y, int r, Color color, int frame_size, Color frame_color)
+void PrimitiveRenderer::draw_cirlce(int x, int y, int r, Color color, int frame_size, Color frame_color)
 {
-    /**
-        rysuje wypelnione kolo z ramka
-    */
-    narysuj_kolo(x, y, r, color);
-    narysuj_kolo(x, y, r, frame_color, frame_size);
+    draw_cirlce(x, y, r, color);
+    draw_cirlce(x, y, r, frame_color, frame_size);
 }
 
 ALLEGRO_COLOR PrimitiveRenderer::get_color(enum Color kol)
 {
-    /*!
-        Zwraca kolor
-        \param kol - przekazuje do switch-a wybrany kolor z dostêpnych w enum color
-        \return zwraca kolor
-    */
     switch (kol)
     {
     case(BIALY):

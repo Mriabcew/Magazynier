@@ -57,14 +57,14 @@ void Menu::print(Meni opt)
 	{
 	case MENU:
 		cout << "=====" << endl;
-		cout << "0.Wyjscie z gry." << endl;
-		cout << "1.Ustawienia." << endl;
-		cout << "2.Wybierz poziom" << endl;
+		cout << "0.Exit." << endl;
+		cout << "1.Settings." << endl;
+		cout << "2.Start level" << endl;
 		break;
 	case SETTINGS:
 		cout << "=====" << endl;
-		cout << "0.Powrot." << endl;
-		cout << "1.Zmien rozdzielczosc." << endl;
+		cout << "0.Go back." << endl;
+		cout << "1.Change window size." << endl;
 		break;
 	}
 }

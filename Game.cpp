@@ -1,9 +1,10 @@
 #include "Game.h"
 
-Game::Game(Display* display)
+Game::Game(Display* display,bool dev)
 {
 	set_fps(60);
 	this->display = display;
+	this->dev = dev;
 }
 
 void Game::loop()
@@ -21,26 +22,31 @@ void Game::loop()
 	int opt;
 	do
 	{
-		cout << "wybierz poziom od 1 do 7" << endl;
+		cout << "select a level 1-6" << endl;
 		cin >> opt;
-	} while (opt < 1 || opt>7);
+	} while (opt < 1 || opt>6);
 
 	string level = "poziom" + std::to_string(opt);
 
-	do
+	if (dev == false)
 	{
-		cout << "Choose a texture style:" << endl;
-		cout << "1.Dungeon" << endl;
-		cout << "2.Space" << endl;
-		cout << "3.Dungeon" << endl;
-		cin >> style;
-	} while (style < 1 || style>6);
-
-	Map* map = new Map(display, style);
+		do
+		{
+			cout << "Choose a texture style:" << endl;
+			cout << "1.Dungeon" << endl;
+			cout << "2.Space" << endl;
+			cout << "3.Warehouse" << endl;
+			cin >> style;
+		} while (style < 1 || style>3);
+	}
+	else if (dev == true)
+		style = 1;
+	Map* map = new Map(display, style ,dev);
 
 restart:
 	
 	map->load_map(level,display);
+	
 	while (1)
 	{
 		ALLEGRO_EVENT events;
@@ -57,19 +63,27 @@ restart:
 
 
 
-
 			display->refresh();
-
 
 			if (map->win())
 			{
-				cout << "WIN" << endl;
-				return;
+				if (al_show_native_message_box(display->get_display(), "WIN",
+					"Congratulations",
+					"Click Ok to contiunue or cencel to exit"
+					, NULL, ALLEGRO_MESSAGEBOX_OK_CANCEL) == 2)
+				{
+					exit(0);
+				}
+				else
+				{
+					cout << "WIN" << endl;
+					return;
+				}
 			}
 		}
 		else if (events.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 		{
-			return;
+			exit(0);
 		}
 		else if (events.type == ALLEGRO_EVENT_KEY_DOWN)
 		{

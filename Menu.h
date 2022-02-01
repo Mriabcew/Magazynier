@@ -18,4 +18,3 @@ public:
 	int get_opt();
 	void print(Meni);
 };
-

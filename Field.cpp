@@ -1,15 +1,28 @@
 #include "Field.h"
-
-Field::Field(Type floor, Type up,int size)
+Field::Field(Type floor, Type up,int style,int size)
 {
 	this->floor = floor;
 	this->up = up;
-	this->size = size;
+	bitmap_floor = al_create_bitmap(size, size);
+	bitmap_up = al_create_bitmap(size, size);
+	bitmap_refresh(style);
 
 }
 
-void Field::draw(int x, int y,int size) 
+
+void Field::set_floor(Type floor)
 {
+	this->floor = floor;
+}
+
+void Field::set_up(Type up)
+{
+	this->up = up;
+}
+void Field::draw(int x, int y,int style,bool dev, int size)
+{
+	if (dev == true)
+	{
 		switch (floor)
 		{
 		case FLOOR:
@@ -25,24 +38,19 @@ void Field::draw(int x, int y,int size)
 			PrimitiveRenderer::draw_rectangle(x, y, size, PrimitiveRenderer::SZARY_CIEMNY, size / 10, PrimitiveRenderer::CZARNY);
 			break;
 		case PLAYER:
-			PrimitiveRenderer::narysuj_kolo(x + size / 2, y + size / 2, size / 2 - size / 10, PrimitiveRenderer::CZERWONY);
+			PrimitiveRenderer::draw_cirlce(x + size / 2, y + size / 2, size / 2 - size / 10, PrimitiveRenderer::CZERWONY);
 			break;
 		case CHEST:
 			PrimitiveRenderer::draw_rectangle(x + size / 5, y + size / 5, size - 2 * (size / 5), PrimitiveRenderer::ZOLTY, size / 10, PrimitiveRenderer::CZARNY);
 			break;
 		}
+	}
+	else if (dev == false)
+	{
+		al_draw_scaled_bitmap(bitmap_floor, 0, 0, 64, 64, x, y, size, size, 0);
+		al_draw_scaled_bitmap(bitmap_up, 0, 0, 64, 64, x, y, size, size, 0);
+	}
 	
-	
-}
-
-void Field::set_floor(Type floor)
-{
-	this->floor = floor;
-}
-
-void Field::set_up(Type up)
-{
-	this->up = up;
 }
 
 void Field::change_up()
@@ -81,7 +89,7 @@ void Field::change_floor()
 
 void Field::change()
 {
-	int tmp=10;
+	int tmp;
 
 	if (up == AIR && floor == AIR)
 		tmp = 1;
@@ -135,6 +143,87 @@ void Field::change()
 		break;
 	}
 }
+
+void Field::bitmap_refresh(int style)
+{
+
+	switch (up)
+	{
+	case AIR:
+		bitmap_up = al_load_bitmap("grafika/powietrze.png");
+		break;
+	case WALL:
+		switch (style)
+		{
+		case 1:
+			bitmap_up = al_load_bitmap("grafika/sciana1.png");
+			break;
+		case 2:
+			bitmap_up = al_load_bitmap("grafika/sciana2.png");
+			break;
+		case 3:
+			bitmap_up = al_load_bitmap("grafika/sciana3.png");
+			break;
+		}
+		break;
+	case CHEST:
+		if (floor == TARGET)
+			bitmap_up = al_load_bitmap("grafika/skrzynia2.png");
+		else
+			bitmap_up = al_load_bitmap("grafika/skrzynia1.png");
+		break;
+	case PLAYER:
+		switch (style)
+		{
+		case 1:
+			bitmap_up = al_load_bitmap("grafika/gracz3.png");
+			break;
+		case 2:
+			bitmap_up = al_load_bitmap("grafika/gracz2.png");
+			break;
+		case 3:
+			bitmap_up = al_load_bitmap("grafika/gracz_t.png");
+			break;
+		}
+		break;
+	}
+	switch (floor)
+	{
+	case AIR:
+		bitmap_floor = al_load_bitmap("grafika/powietrze.png");
+		break;
+	case FLOOR:
+		switch (style)
+		{
+		case 1:
+			bitmap_floor = al_load_bitmap("grafika/podloga1.png");
+			break;
+		case 2:
+			bitmap_floor = al_load_bitmap("grafika/podloga2.png");
+			break;
+		case 3:
+			bitmap_floor = al_load_bitmap("grafika/podloga3.png");
+			break;
+		}
+		break;
+	case TARGET:
+		switch (style)
+		{
+		case 1:
+			bitmap_floor = al_load_bitmap("grafika/cel1.png");
+			break;
+		case 2:
+			bitmap_floor = al_load_bitmap("grafika/cel2.png");
+			break;
+		case 3:
+			bitmap_floor = al_load_bitmap("grafika/cel3.png");
+			break;
+		}
+		break;
+	}
+}
+
+
 
 Field::Type Field::get_floor()
 {

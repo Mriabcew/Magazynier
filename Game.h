@@ -7,8 +7,9 @@ class Game
 private:
 	Display* display;
 	int fps;
+	bool dev;
 public:
-	Game(Display*);
+	Game(Display*,bool);
 	~Game();
 
 	void loop();

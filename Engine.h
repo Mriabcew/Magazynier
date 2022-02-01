@@ -14,10 +14,20 @@ class Engine
 {
 private:
 	Display *e;
+	bool dev;
 public:
-	Engine();
-	~Engine();
+	/**
+	* Engine
+	* @param bool dev
+	* if you are developer you can run this game in special dev mode
+	*/
+	Engine(bool);
+	
+	/**
+	* allegro_start
+	* allegro initialization
+	*/
 
-	bool allegro_start();
+	void allegro_start();
 };
 
